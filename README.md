@@ -40,7 +40,7 @@ Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.
   <img src="visuals/Best_Results_Third_Dataset.png" width="1500"/>
 </p>
 
-All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline
+All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline.
 
 
 
