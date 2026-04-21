@@ -22,22 +22,22 @@ All three datasets came from the Kaggle website but were based on real data. The
 
 ## Results and Visualization
 <p align="center">
-  <img src="visuals/Best_Results_First_Dataset.png" width="700"/>
+  <img src="visuals/Best_Results_First_Dataset.png" width="1500"/>
 </p>
 
-*All models exceed 80%, with Random Forest and KNN outperforming the baseline.*
+All models exceed 80%, with Random Forest and KNN outperforming the baseline.
 
  <p align="center">
-  <img src="visuals/Best_Results_Second_Dataset.png" width="700"/>
+  <img src="visuals/Best_Results_Second_Dataset.png" width="1500"/>
 </p>
 
-*Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.*
+Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.
 
   <p align="center">
-  <img src="visuals/Best_Results_Third_Dataset.png" width="700"/>
+  <img src="visuals/Best_Results_Third_Dataset.png" width="1500"/>
 </p>
 
-*All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline*
+All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline
 
 
 
