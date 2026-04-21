@@ -1,4 +1,11 @@
 # Phishing Detection Capstone Project
+
+## Key Results
+
+- Best Model: Random Forest  
+- Datasets: 3 (balanced + imbalanced)  
+- Key Metrics: F1-score (phishing class), accuracy
+- Main Insight: Random Forest consistently matched or outperformed all other models across datasets, particularly in handling imbalanced phishing classification tasks.
 ## Overview
 This project used supervised machine learning techniques to distinguish between phishing and non-phishing urls and emails. This analysis focused on appropriate evaluation metrics and tradeoffs relevant to real-world phishing detection, something that is important for businesses, organizations, and individuals since it makes them less likely to share sensitive data with cybercriminals.  
 
@@ -14,17 +21,25 @@ All three datasets came from the Kaggle website but were based on real data. The
 - Evaluated the models based on test accuracy, cross-validation accuracy, and the phishing f1 score, judging based on whether they met the 80% or higher benchmark for these metrics as well as their performance compared to the baseline.
 
 ## Results and Visualization
- <img src="visuals/Best_Results_First_Dataset.png" width="1900"/>
+<p align="center">
+  <img src="visuals/Best_Results_First_Dataset.png" width="700"/>
+</p>
 
-For the first dataset, all models meet the 80% or higher benchmark but Bernoulli Naive Bayes is a noticeable underperformer. KNearestNeighbors (KNN) and Random Forest do better than the Logistic Regression baseline. 
+*All models exceed 80%, with Random Forest and KNN outperforming the baseline.*
 
- <img src="visuals/Best_Results_Second_Dataset.png" width="1900"/>
+ <p align="center">
+  <img src="visuals/Best_Results_Second_Dataset.png" width="700"/>
+</p>
 
- For the second dataset, Bernoulli Naive Bayes fails this benchmark. All other models outperform the Logistic Regression baseline. 
+*Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.*
 
-  <img src="visuals/Best_Results_Third_Dataset.png" width="1900"/>
+  <p align="center">
+  <img src="visuals/Best_Results_Third_Dataset.png" width="700"/>
+</p>
 
- For the third dataset, all models meet the benchmark but Random Forest is the only model that at least approximates the Logistic Regression baseline; KNN, Decision Tree, and Bernoulli Naive Bayes perform below it. 
+*All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline*
+
+
 
 Overall, all models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for all three datasets. However, only the Random Forest model outperformed or approximated the Logistic Regression baseline model for all three datasets. Therefore, it and other ensemble models are best suited for phishing detection in addition to linear models such as Logistic Regression. 
 
@@ -43,6 +58,12 @@ Overall, all models aside from Bernoulli Naive Bayes met the 80% or higher bench
 - Python (numpy, pandas, scikit-learn, matplotlib)
 - Jupyter Notebook
 - Google Colab
+
+## How to Run
+
+1. Clone repository  
+2. Install dependencies  
+3. Open notebooks in order  
 
 
 
