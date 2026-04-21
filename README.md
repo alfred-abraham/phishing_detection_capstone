@@ -21,18 +21,21 @@ All three datasets came from the Kaggle website but were based on real data. The
 - Evaluated the models based on test accuracy, cross-validation accuracy, and the phishing f1 score, judging based on whether they met the 80% or higher benchmark for these metrics as well as their performance compared to the baseline.
 
 ## Results and Visualization
+## First Dataset
 <p align="center">
   <img src="visuals/Best_Results_First_Dataset.png" width="1500"/>
 </p>
 
 All models exceed 80%, with Random Forest and KNN outperforming the baseline.
 
+## Second Dataset
  <p align="center">
   <img src="visuals/Best_Results_Second_Dataset.png" width="1500"/>
 </p>
 
 Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.
 
+## Third Dataset
   <p align="center">
   <img src="visuals/Best_Results_Third_Dataset.png" width="1500"/>
 </p>
