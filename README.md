@@ -13,12 +13,12 @@ All three datasets came from the Kaggle website but were based on real data. The
 - Trained a linear baseline model (Logistic Regression), a distance-based model (KNearestNeighbors), a probabilistic model (Bernoulli Naive Bayes), a tree model (Decision Tree) and an ensemble model (Random Forest) on all three datasets after appropriate preprocessing steps (i.e. standardization, TF-IDF in the case of the third dataset). The objective was to figure out which category of model performed best. 
 - Evaluated the models based on test accuracy, cross-validation accuracy, and the phishing f1 score, judging based on whether they met the 80% or higher benchmark for these metrics as well as their performance compared to the baseline.
 
-## Results
-![Best_Results_First_Dataset](visuals/Best_Results_First_Dataset.png)
+## Results and Visualization
+ <img src="visuals/Best_Results_First_Dataset.png" width="600"/>
 
-![Best_Results_Second_Dataset](visuals/Best_Results_Second_Dataset.png)
+ <img src="visuals/Best_Results_Second_Dataset.png" width="600"/>
 
-![Best_Results_Third_Dataset](visuals/Best_Results_Third_Dataset.png)
+  <img src="visuals/Best_Results_Third_Dataset.png" width="600"/>
 
 All models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for all three datasets. However, only the Random Forest model outperformed or approximated the Logistic Regression baseline model for all three datasets. Therefore, it and other ensemble models are best suited for phishing detection in addition to linear models such as Logistic Regression. 
 
