@@ -21,7 +21,7 @@ All models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for 
 - The datasets have a relatively high phishing to non-phishing ratio that isn't very reflective of the real world where phishing urls and emails are massively outnumbered by non-phishing urls and emails.
 - The maximum limit for TF-IDF features in the case of the email dataset was set to 1000 to save computational resources. A higher number would likely deliver better results.
 
-## Recommndations
+## Recommendations
 - Use more current datasets.
 - Adjust for the actual ratio of phishing to non-phishing urls and emails in the real world.
 - Do appropriate preprocessing techniques such as standardization and feature engineering (i.e. TF-IDF) if necessary.
@@ -29,8 +29,8 @@ All models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for 
 
 ## Tools
 - Python (numpy, pandas, scikit-learn, matplotlib)
-- Juypter Notebook
-- Google Collab
+- Jupyter Notebook
+- Google Colab
 
 
 
