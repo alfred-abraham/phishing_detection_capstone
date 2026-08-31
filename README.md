@@ -1,5 +1,33 @@
 # Phishing Detection Capstone Project
 
+## Live Application
+
+The project includes a Streamlit app that deploys the tuned Random Forest email
+classifier. Paste an email's subject and body to receive a prediction and an
+estimated phishing probability.
+
+### Run locally
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+The model trains once from `datasets/Phishing_Email_Dataset.csv` and is cached
+for the app process. Training and prediction share the same TF-IDF + Random
+Forest pipeline.
+
+### Deploy with Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Create an app in Streamlit Community Cloud and select this repository.
+3. Set the entry-point file to `app.py`, then deploy.
+
+No secrets or external services are required.
+
 ## Key Results
 
 - Best Model: Random Forest  
