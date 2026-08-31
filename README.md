@@ -8,17 +8,41 @@ estimated phishing probability.
 
 ### Run locally
 
+Install [Python](https://www.python.org/downloads/) and
+[Git](https://git-scm.com/downloads), then clone the repository and enter its
+directory:
+
 ```bash
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
+git clone https://github.com/alfred-abraham/phishing_detection_capstone.git
+cd phishing_detection_capstone
 ```
 
+On Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+On macOS or Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+The app opens at [http://localhost:8501](http://localhost:8501). To stop it,
+press `Ctrl+C` in the terminal. If Git is not installed, download the repository
+with **Code → Download ZIP** on GitHub, extract it, and run the same setup
+commands from the extracted directory.
+
 The model trains once from `datasets/Phishing_Email_Dataset.csv` and is cached
-for the app process. Training and prediction share the same TF-IDF + Random
-Forest pipeline.
+for the app process, so the first analysis may take 30–60 seconds. Training and
+prediction share the same TF-IDF + Random Forest pipeline.
 
 ### Deploy with Streamlit Community Cloud
 
