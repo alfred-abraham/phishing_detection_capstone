@@ -35,10 +35,7 @@ def load_training_data(path: Path | str = DEFAULT_DATA_PATH) -> pd.DataFrame:
     data = data.dropna(subset=["Email Text", "Email Type"]).copy()
     data["Email Text"] = data["Email Text"].astype(str).str.strip()
     data = data[data["Email Text"] != ""]
-    # Conflicting labels for identical text cannot support an unambiguous target.
-    conflicts = data.groupby("Email Text")["Email Type"].nunique()
-    data = data[~data["Email Text"].isin(conflicts[conflicts > 1].index)]
-    data = data.drop_duplicates(subset=["Email Text"])
+    data = data.drop_duplicates(subset=["Email Text", "Email Type"])
 
     labels = set(data["Email Type"].unique())
     expected = {PHISHING_LABEL, SAFE_LABEL}
@@ -48,7 +45,7 @@ def load_training_data(path: Path | str = DEFAULT_DATA_PATH) -> pd.DataFrame:
 
 
 def build_pipeline(*, n_estimators: int = 200) -> Pipeline:
-    """Build the fixed TF-IDF + Random Forest demonstration pipeline."""
+    """Build the tuned TF-IDF + Random Forest pipeline from the analysis."""
     return Pipeline(
         steps=[
             (

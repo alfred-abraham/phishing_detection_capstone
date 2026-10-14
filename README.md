@@ -1,69 +1,124 @@
-# Phishing detection capstone
+# Phishing Detection Capstone Project
 
-Compare five supervised classifiers across two URL corpora and a text-email corpus, with preprocessing fitted inside cross-validation and model selection based on phishing-class F1.
+## Live Application
 
-## Run
-Python 3.12:
+The project includes a Streamlit app that deploys the tuned Random Forest email
+classifier. Paste an email's subject and body to receive a prediction and an
+estimated phishing probability.
+
+### Run locally
+
+Install [Python](https://www.python.org/downloads/) and
+[Git](https://git-scm.com/downloads), then clone the repository and enter its
+directory:
+
 ```bash
-python -m pip install -r requirements-dev.txt
-python evaluate_models.py
-python -m pytest tests
+git clone https://github.com/alfred-abraham/phishing_detection_capstone.git
+cd phishing_detection_capstone
+```
+
+On Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
 python -m streamlit run app.py
 ```
-Launch Jupyter from the repository or notebooks directory. The three modeling notebooks display measured results and retrain when RECOMPUTE=True. EDA and cleaning read the actual repository-relative source files.
+
+On macOS or Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+The app opens at [http://localhost:8501](http://localhost:8501). To stop it,
+press `Ctrl+C` in the terminal. If Git is not installed, download the repository
+with **Code → Download ZIP** on GitHub, extract it, and run the same setup
+commands from the extracted directory.
+
+The model trains once from `datasets/Phishing_Email_Dataset.csv` and is cached
+for the app process, so the first analysis may take 30–60 seconds. Training and
+prediction share the same TF-IDF + Random Forest pipeline.
+
+### Deploy with Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Create an app in Streamlit Community Cloud and select this repository.
+3. Set the entry-point file to `app.py`, then deploy.
+
+No secrets or external services are required.
+
+## Key Results
+
+- Best Model: Random Forest  
+- Datasets: 3 (balanced + imbalanced)  
+- Key Metrics: F1-score (phishing class), accuracy
+- Main Insight: Random Forest consistently matched or outperformed all other models across datasets, particularly in handling imbalanced phishing classification tasks.
+## Overview
+This project used supervised machine learning techniques to distinguish between phishing and non-phishing urls and emails. This analysis focused on appropriate evaluation metrics and tradeoffs relevant to real-world phishing detection, something that is important for businesses, organizations, and individuals since it makes them less likely to share sensitive data with cybercriminals.  
+
+## Problem
+The task was to identify urls and emails as phishing or non-phishing based on either manually extracted features in the case of the two phishing url datasets or TF-IDF features in the case of the phishing email dataset. This was a binary classification problem that involves one balanced phishing url dataset and two imbalanced datasets, one phishing url dataset and one phishing email dataset. 
 
 ## Data
-The committed datasets are `dataset_phishing.csv`, `web-page-phishing.csv`, and `Phishing_Email_Dataset.csv`. The email source now has 9,000 rows; historical notebook results from a larger corpus are no longer applicable. Missing/blank email text, exact duplicate text and conflicting text labels are removed before splitting. Repeated URL identifiers and exact tabular duplicates are handled before holdout creation.
-Original provenance is described in the historical capstone reports. Exact Kaggle source/version URLs were not recorded, so provenance remains incomplete and should be resolved before reusing the corpora beyond this portfolio.
+All three datasets came from the Kaggle website but were based on real data. The first balanced phishing url dataset was originally derived from a 2021 research study, the second imbalanced phishing url dataset was created by combining the first dataset with another real phishing url dataset, and the email dataset was based on an actual dataset that distinguished between phishing and safe emails. 
 
-## Evaluation
-Stratified 80/20 holdout; three-fold stratified training CV; two documented candidate configurations per model. The scorer is phishing-class F1. Every transformation is part of the estimator pipeline, including TF-IDF and SVD for text KNN, or scaling for tabular Logistic Regression/KNN. No preprocessing sees the validation fold during fitting.
-The app remains a fixed Random Forest demonstration, evaluated separately with its exact TF-IDF configuration. It is not presented as the strongest email model.
+## Approach
+- Did Exploratory Data Analysis on all three datasets and found that while the first two had features that were significantly correlated with phishing or non-phishing status (i.e. url length, number of hyphens), the third had no features aside from an email text column and an email type column. This indicated that NLP techniques such as TF-IDF were necessary.
+- Trained a linear baseline model (Logistic Regression), a distance-based model (KNearestNeighbors), a probabilistic model (Bernoulli Naive Bayes), a tree model (Decision Tree) and an ensemble model (Random Forest) on all three datasets after appropriate preprocessing steps (i.e. standardization, TF-IDF in the case of the third dataset). The objective was to figure out which category of model performed best. 
+- Evaluated the models based on test accuracy, cross-validation accuracy, and the phishing f1 score, judging based on whether they met the 80% or higher benchmark for these metrics as well as their performance compared to the baseline.
 
-### url_balanced
+## Results and Visualization
+## First Dataset
+<p align="center">
+  <img src="visuals/Best_Results_First_Dataset.png" width="1500"/>
+</p>
 
-11,429 cleaned records. Training-CV F1 selects **Random Forest**.
+All models exceed 80%, with Random Forest and KNN outperforming the baseline.
 
-| model | cv_phishing_f1 | accuracy | precision | recall | f1 | average_precision |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logistic Regression | 0.9471 | 0.9366 | 0.9408 | 0.9318 | 0.9363 | 0.9800 |
-| KNN | 0.9316 | 0.9374 | 0.9537 | 0.9195 | 0.9363 | 0.9683 |
-| Bernoulli Naive Bayes | 0.8805 | 0.8666 | 0.8728 | 0.8583 | 0.8655 | 0.9294 |
-| Decision Tree | 0.9371 | 0.9374 | 0.9417 | 0.9326 | 0.9371 | 0.9106 |
-| Random Forest | 0.9657 | 0.9646 | 0.9658 | 0.9633 | 0.9645 | 0.9934 |
+## Second Dataset
+ <p align="center">
+  <img src="visuals/Best_Results_Second_Dataset.png" width="1500"/>
+</p>
 
-### url_imbalanced
+Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.
 
-21,891 cleaned records. Training-CV F1 selects **KNN**.
+## Third Dataset
+  <p align="center">
+  <img src="visuals/Best_Results_Third_Dataset.png" width="1500"/>
+</p>
 
-| model | cv_phishing_f1 | accuracy | precision | recall | f1 | average_precision |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logistic Regression | 0.7890 | 0.7399 | 0.9142 | 0.7077 | 0.7978 | 0.9364 |
-| KNN | 0.8612 | 0.7831 | 0.8389 | 0.8674 | 0.8529 | 0.9251 |
-| Bernoulli Naive Bayes | 0.8465 | 0.7616 | 0.8061 | 0.8838 | 0.8431 | 0.8855 |
-| Decision Tree | 0.8278 | 0.7700 | 0.9254 | 0.7427 | 0.8240 | 0.9235 |
-| Random Forest | 0.8340 | 0.7324 | 0.8162 | 0.8142 | 0.8152 | 0.7945 |
+All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline.
 
-### email
 
-8,598 cleaned records. Training-CV F1 selects **Logistic Regression**.
 
-| model | cv_phishing_f1 | accuracy | precision | recall | f1 | average_precision |
-| --- | --- | --- | --- | --- | --- | --- |
-| Logistic Regression | 0.9454 | 0.9622 | 0.9349 | 0.9678 | 0.9511 | 0.9906 |
-| KNN | 0.9221 | 0.9500 | 0.9315 | 0.9372 | 0.9344 | 0.9645 |
-| Bernoulli Naive Bayes | 0.8998 | 0.9238 | 0.8480 | 0.9740 | 0.9066 | 0.9804 |
-| Decision Tree | 0.8645 | 0.8983 | 0.8610 | 0.8729 | 0.8669 | 0.8089 |
-| Random Forest | 0.9404 | 0.9570 | 0.9474 | 0.9387 | 0.9431 | 0.9858 |
-| App Random Forest (fixed parameters) | nan | 0.9576 | 0.9489 | 0.9387 | 0.9438 | 0.9865 |
+Overall, all models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for all three datasets. However, only the Random Forest model outperformed or approximated the Logistic Regression baseline model for all three datasets. Therefore, it and other ensemble models are best suited for phishing detection in addition to linear models such as Logistic Regression. 
 
-## Interpretation and limits
-Random Forest leads the balanced URL comparison, KNN leads the imbalanced URL comparison, and Logistic Regression leads the email comparison by training-CV F1. No universal winner follows from these corpora. Small score differences do not establish statistical superiority.
+## Limitations
+- The datasets are a couple years old; phishing tactics have likely changed since then.
+- The datasets have a relatively high phishing to non-phishing ratio that isn't very reflective of the real world where phishing urls and emails are massively outnumbered by non-phishing urls and emails.
+- The maximum limit for TF-IDF features in the case of the email dataset was set to 1000 to save computational resources. A higher number would likely deliver better results.
 
-Deduplication cannot remove all near-duplicate messages, related campaigns or shared domains. Random holdout results do not establish performance on new sources or future campaigns. Class prevalence differs from real inboxes. Model probabilities are uncalibrated scores. The app processes text only and does not inspect attachments, sender authentication or destination sites.
+## Recommendations
+- Use more current datasets.
+- Adjust for the actual ratio of phishing to non-phishing urls and emails in the real world.
+- Do appropriate preprocessing techniques such as standardization and feature engineering (i.e. TF-IDF) if necessary.
+- Experiment with different numbers for the max features parameter of the TF-IDF vectorizer if that is being used.
 
-The DOCX reports preserve the original capstone work. The comparison PNGs have been regenerated from the current results. They are historical and superseded for current model results by the regenerated notebooks, tables and comparison figures. See [results](results/) for package versions, sample counts and selected hyperparameters.
+## Tools
+- Python (numpy, pandas, scikit-learn, matplotlib)
+- Jupyter Notebook
+- Google Colab
 
-![Balanced URL comparison](visuals/Best_Results_First_Dataset.png)
-![Imbalanced URL comparison](visuals/Best_Results_Second_Dataset.png)
-![Email comparison](visuals/Best_Results_Third_Dataset.png)
+## How to Run
+
+1. Clone repository  
+2. Install dependencies  
+3. Open notebooks in order  
+
+
+
