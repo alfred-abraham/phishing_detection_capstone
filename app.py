@@ -24,17 +24,14 @@ st.caption("A Random Forest classifier trained on TF-IDF features from the capst
 
 with st.sidebar:
     st.header("Model details")
-    st.markdown(
-        """
-        **Model:** Random Forest  
-        **Features:** TF-IDF (1,000 terms)  
-        **Notebook test accuracy:** 95.25%  
-        **Phishing recall:** 96%  
-
-        The tuned Random Forest was selected because it had the best
-        cross-validation accuracy among the evaluated email models.
-        """
-    )
+    from pathlib import Path
+    import pandas as pd
+    metrics = pd.read_csv(Path(__file__).parent / 'results' / 'email_metrics.csv')
+    row = metrics.set_index('model').loc['App Random Forest (fixed parameters)']
+    st.write('Demo model: Random Forest; TF-IDF, 1,000 terms')
+    st.metric('Holdout accuracy', f"{row.accuracy:.2%}")
+    st.metric('Phishing recall', f"{row.recall:.1%}")
+    st.caption('Logistic Regression led training-CV F1 in the current email comparison. This app demonstrates the separately evaluated fixed Random Forest.')
     st.warning(
         "This is a portfolio demonstration, not a replacement for an email "
         "security product. Never open links or attachments solely because an "
@@ -79,7 +76,7 @@ if submitted:
                     "you should still verify unexpected requests."
                 )
 
-            st.metric("Estimated phishing probability", f"{result.phishing_probability:.1%}")
+            st.metric("Phishing model score", f"{result.phishing_probability:.1%}")
             st.progress(result.phishing_probability)
             st.caption(
                 f"Model trained on {model_bundle.training_rows:,} unique labeled emails "
@@ -92,6 +89,6 @@ if submitted:
 with st.expander("How the prediction works"):
     st.write(
         "The app converts email text into TF-IDF features, then sends those features "
-        "to the tuned Random Forest from the project's modeling analysis. Training "
+        "to the fixed Random Forest demonstration model. Training "
         "and inference use one pipeline, so the same preprocessing is applied in both places."
     )

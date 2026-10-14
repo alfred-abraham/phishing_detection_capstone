@@ -1,0 +1,31 @@
+{
+  "rows": 11429,
+  "train_rows": 9143,
+  "test_rows": 2286,
+  "positive_label": "phishing",
+  "selected_by_cv_f1": "Random Forest",
+  "best_parameters": {
+    "Logistic Regression": {
+      "model__C": 1.0
+    },
+    "KNN": {
+      "model__n_neighbors": 5
+    },
+    "Bernoulli Naive Bayes": {
+      "model__alpha": 0.1
+    },
+    "Decision Tree": {
+      "model__max_depth": 10
+    },
+    "Random Forest": {
+      "model__n_estimators": 200
+    }
+  },
+  "protocol": "Stratified 80/20 holdout, 3-fold stratified training CV, fold-local preprocessing. Random split; no temporal generalization claim.",
+  "versions": {
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1"
+  },
+  "input_sha256": "7b67716384412a10eea447225785a49517111dd53cac517745dc8f2ce2950222"
+}

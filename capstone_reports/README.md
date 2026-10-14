@@ -1,1 +1,1 @@
-The technical and non-technical reports for the phishing detection project. 
+The DOCX files preserve the historical capstone report. Their dataset sizes and metrics are superseded by the current repository README, results tables and regenerated modeling notebooks. The email dataset currently contains 9,000 raw rows; current comparisons fit preprocessing within CV folds.
