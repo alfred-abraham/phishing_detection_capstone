@@ -4,3 +4,6 @@ __pycache__/
 .pytest_cache/
 .streamlit/secrets.toml
 models/*.joblib
+
+.ipynb_checkpoints/
+data/
