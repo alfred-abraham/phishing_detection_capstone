@@ -31,9 +31,17 @@ Random Forest exceeded or approximately matched the Logistic Regression baseline
 | Imbalanced URLs | Bernoulli Naive Bayes fell below 80%; the other models outperformed the baseline. |
 | Emails | All models exceeded 80%; Random Forest approximately matched the baseline. |
 
-![Email dataset model comparison](visuals/Best_Results_Third_Dataset.png)
+### Balanced URL Dataset
 
-See [visuals](visuals/) for the other dataset comparisons.
+![Balanced URL dataset model comparison](visuals/Best_Results_First_Dataset.png)
+
+### Imbalanced URL Dataset
+
+![Imbalanced URL dataset model comparison](visuals/Best_Results_Second_Dataset.png)
+
+### Email Dataset
+
+![Email dataset model comparison](visuals/Best_Results_Third_Dataset.png)
 
 ## Tools
 
