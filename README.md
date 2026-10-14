@@ -57,7 +57,7 @@ No secrets or external services are required.
 - Best Model: Random Forest  
 - Datasets: 3 (balanced + imbalanced)  
 - Key Metrics: F1-score (phishing class), accuracy
-- Main Insight: Random Forest consistently matched or outperformed all other models across datasets, particularly in handling imbalanced phishing classification tasks.
+- Main Insight: Random Forest consistently exceeded or at least matched the Logistic Regression baseline for all three datasets. 
 ## Overview
 This project used supervised machine learning techniques to distinguish between phishing and non-phishing urls and emails. This analysis focused on appropriate evaluation metrics and tradeoffs relevant to real-world phishing detection, something that is important for businesses, organizations, and individuals since it makes them less likely to share sensitive data with cybercriminals.  
 
