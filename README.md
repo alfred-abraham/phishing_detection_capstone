@@ -1,124 +1,78 @@
-# Phishing Detection Capstone Project
+# Phishing Detection Capstone
 
-## Live Application
+## Overview
 
-The project includes a Streamlit app that deploys the tuned Random Forest email
-classifier. Paste an email's subject and body to receive a prediction and an
-estimated phishing probability.
+A supervised learning comparison for phishing URLs and emails, with a Streamlit app that analyzes email subjects and bodies using a tuned Random Forest classifier.
 
-### Run locally
+## Objective
 
-Install [Python](https://www.python.org/downloads/) and
-[Git](https://git-scm.com/downloads), then clone the repository and enter its
-directory:
+Distinguish phishing from legitimate URLs and emails while comparing model performance across balanced and imbalanced datasets.
+
+## Data
+
+Three Kaggle datasets are included in [datasets](datasets/): a balanced URL dataset derived from a 2021 research study, an imbalanced URL dataset, and an imbalanced email dataset. URL data uses extracted features; email data uses text and class labels.
+
+## Approach
+
+1. Inspect and clean the datasets, then explore relationships between features and phishing status.
+2. Apply appropriate preprocessing, including standardization and TF-IDF for email text.
+3. Compare Logistic Regression, K-Nearest Neighbors, Bernoulli Naive Bayes, Decision Tree, and Random Forest.
+4. Evaluate test accuracy, cross-validation accuracy, and phishing-class F1-score against an 80% benchmark and the Logistic Regression baseline.
+
+The [notebooks](notebooks/) contain data preparation, exploration, and separate modeling analyses for each dataset. Detailed technical and nontechnical reports are in [capstone_reports](capstone_reports/).
+
+## Results
+
+Random Forest exceeded or approximately matched the Logistic Regression baseline across all three datasets. Bernoulli Naive Bayes fell below the 80% benchmark on the second dataset; the other models met the benchmark across the datasets.
+
+| Dataset | Reported comparison |
+| --- | --- |
+| Balanced URLs | All models exceeded 80%; Random Forest and KNN outperformed the baseline. |
+| Imbalanced URLs | Bernoulli Naive Bayes fell below 80%; the other models outperformed the baseline. |
+| Emails | All models exceeded 80%; Random Forest approximately matched the baseline. |
+
+![Email dataset model comparison](visuals/Best_Results_Third_Dataset.png)
+
+See [visuals](visuals/) for the other dataset comparisons.
+
+## Tools
+
+Python, NumPy, pandas, scikit-learn, Matplotlib, Jupyter Notebook, Google Colab, and Streamlit.
+
+## How to Run
+
+Clone the repository and enter its directory:
 
 ```bash
 git clone https://github.com/alfred-abraham/phishing_detection_capstone.git
 cd phishing_detection_capstone
 ```
 
-On Windows PowerShell:
+Create and activate a virtual environment:
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-python -m streamlit run app.py
-```
+- **Windows PowerShell:** `python -m venv .venv`, then `.\.venv\Scripts\Activate.ps1`.
+- **macOS/Linux:** `python3 -m venv .venv`, then `source .venv/bin/activate`.
 
-On macOS or Linux:
+Install dependencies and start the app:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m streamlit run app.py
 ```
 
-The app opens at [http://localhost:8501](http://localhost:8501). To stop it,
-press `Ctrl+C` in the terminal. If Git is not installed, download the repository
-with **Code → Download ZIP** on GitHub, extract it, and run the same setup
-commands from the extracted directory.
+Open [localhost:8501](http://localhost:8501) and paste an email's subject and body. The app returns a prediction and estimated phishing probability. It trains once from `datasets/Phishing_Email_Dataset.csv` and caches the TF-IDF + Random Forest pipeline; the first analysis may take 30–60 seconds. Press `Ctrl+C` to stop.
 
-The model trains once from `datasets/Phishing_Email_Dataset.csv` and is cached
-for the app process, so the first analysis may take 30–60 seconds. Training and
-prediction share the same TF-IDF + Random Forest pipeline.
+For the analysis, open the preparation notebook, then EDA, then the three modeling notebooks in [notebooks](notebooks/). Check dataset paths before running.
 
-### Deploy with Streamlit Community Cloud
+To deploy on Streamlit Community Cloud, select this repository and set `app.py` as the entry point. No secrets or external services are required.
 
-1. Push this repository to GitHub.
-2. Create an app in Streamlit Community Cloud and select this repository.
-3. Set the entry-point file to `app.py`, then deploy.
+## Limitations and Next Steps
 
-No secrets or external services are required.
+- Older datasets may not represent current phishing tactics.
+- Phishing prevalence is higher than in typical real-world traffic.
+- Email TF-IDF features were capped at 1,000 to limit computation.
+- Future work includes newer data, more representative class ratios, and TF-IDF feature-count experiments.
 
-## Key Results
+## License
 
-- Best Model: Random Forest  
-- Datasets: 3 (balanced + imbalanced)  
-- Key Metrics: F1-score (phishing class), accuracy
-- Main Insight: Random Forest consistently exceeded or at least matched the Logistic Regression baseline for all three datasets. 
-## Overview
-This project used supervised machine learning techniques to distinguish between phishing and non-phishing urls and emails. This analysis focused on appropriate evaluation metrics and tradeoffs relevant to real-world phishing detection, something that is important for businesses, organizations, and individuals since it makes them less likely to share sensitive data with cybercriminals.  
-
-## Problem
-The task was to identify urls and emails as phishing or non-phishing based on either manually extracted features in the case of the two phishing url datasets or TF-IDF features in the case of the phishing email dataset. This was a binary classification problem that involves one balanced phishing url dataset and two imbalanced datasets, one phishing url dataset and one phishing email dataset. 
-
-## Data
-All three datasets came from the Kaggle website but were based on real data. The first balanced phishing url dataset was originally derived from a 2021 research study, the second imbalanced phishing url dataset was created by combining the first dataset with another real phishing url dataset, and the email dataset was based on an actual dataset that distinguished between phishing and safe emails. 
-
-## Approach
-- Did Exploratory Data Analysis on all three datasets and found that while the first two had features that were significantly correlated with phishing or non-phishing status (i.e. url length, number of hyphens), the third had no features aside from an email text column and an email type column. This indicated that NLP techniques such as TF-IDF were necessary.
-- Trained a linear baseline model (Logistic Regression), a distance-based model (KNearestNeighbors), a probabilistic model (Bernoulli Naive Bayes), a tree model (Decision Tree) and an ensemble model (Random Forest) on all three datasets after appropriate preprocessing steps (i.e. standardization, TF-IDF in the case of the third dataset). The objective was to figure out which category of model performed best. 
-- Evaluated the models based on test accuracy, cross-validation accuracy, and the phishing f1 score, judging based on whether they met the 80% or higher benchmark for these metrics as well as their performance compared to the baseline.
-
-## Results and Visualization
-## First Dataset
-<p align="center">
-  <img src="visuals/Best_Results_First_Dataset.png" width="1500"/>
-</p>
-
-All models exceed 80%, with Random Forest and KNN outperforming the baseline.
-
-## Second Dataset
- <p align="center">
-  <img src="visuals/Best_Results_Second_Dataset.png" width="1500"/>
-</p>
-
-Bernoulli Naive Bayes falls below 80%. All other models outperform the baseline.
-
-## Third Dataset
-  <p align="center">
-  <img src="visuals/Best_Results_Third_Dataset.png" width="1500"/>
-</p>
-
-All models exceed 80%, with Random Forest being the only model that achieves results approximating the baseline.
-
-
-
-Overall, all models aside from Bernoulli Naive Bayes met the 80% or higher benchmark for all three datasets. However, only the Random Forest model outperformed or approximated the Logistic Regression baseline model for all three datasets. Therefore, it and other ensemble models are best suited for phishing detection in addition to linear models such as Logistic Regression. 
-
-## Limitations
-- The datasets are a couple years old; phishing tactics have likely changed since then.
-- The datasets have a relatively high phishing to non-phishing ratio that isn't very reflective of the real world where phishing urls and emails are massively outnumbered by non-phishing urls and emails.
-- The maximum limit for TF-IDF features in the case of the email dataset was set to 1000 to save computational resources. A higher number would likely deliver better results.
-
-## Recommendations
-- Use more current datasets.
-- Adjust for the actual ratio of phishing to non-phishing urls and emails in the real world.
-- Do appropriate preprocessing techniques such as standardization and feature engineering (i.e. TF-IDF) if necessary.
-- Experiment with different numbers for the max features parameter of the TF-IDF vectorizer if that is being used.
-
-## Tools
-- Python (numpy, pandas, scikit-learn, matplotlib)
-- Jupyter Notebook
-- Google Colab
-
-## How to Run
-
-1. Clone repository  
-2. Install dependencies  
-3. Open notebooks in order  
-
-
-
+See [LICENSE](LICENSE) for repository licensing. Refer to the dataset sources for their usage terms.
